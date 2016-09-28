@@ -8,13 +8,20 @@ This package is the set of two similar behaviors. The first one allows you to ke
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
+add co composer.json:
+
+	"repositories": [
+		...
+		{"type": "vcs", "url": "https://github.com/sashsvamir/yii2-upload-behavior"}
+	],
+
 Either run
 
-    php composer.phar require --prefer-dist yii-dream-team/yii2-upload-behavior "*"
+    php composer.phar require --prefer-dist sashsvamir/yii2-upload-behavior "*@dev"
 
 or add
 
-    "yii-dream-team/yii2-upload-behavior": "*"
+    "yii-dream-team/yii2-upload-behavior": "*@dev"
 
 to the `require` section of your composer.json.
  
