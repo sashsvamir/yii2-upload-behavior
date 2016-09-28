@@ -1,5 +1,5 @@
 {
-  "name": "yii-dream-team/yii2-upload-behavior",
+  "name": "sashsvamir/yii2-upload-behavior",
   "type": "yii2-extension",
   "description": "Yii2 file/image upload behavior for ActiveRecord",
   "keywords": [
@@ -34,7 +34,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "yiidreamteam\\upload\\": "./src"
+      "sashsvamir\\upload\\": "./src"
     }
   }
 }
