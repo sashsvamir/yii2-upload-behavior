@@ -74,6 +74,10 @@ Setup proper form enctype:
 
 File should be uploading fine.
 
+You can delete uploaded file by call:
+
+    $model->removeFile();
+
 You can get uploaded file url using model call:
 
     echo $model->getUploadedFileUrl('fileUpload');
@@ -140,6 +144,10 @@ Setup proper form enctype:
     ]);
 
 File should be uploading fine.
+
+You can delete uploaded images by call:
+
+    $model->removeFile();
 
 You can get uploaded image url using model call:
 

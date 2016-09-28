@@ -3,7 +3,7 @@
  * @author Alexey Samoylov <alexey.samoylov@gmail.com>
  * @link http://yiidreamteam.com/yii2/upload-behavior
  */
-namespace yiidreamteam\upload;
+namespace sashsvamir\upload;
 
 use Yii;
 use yii\base\Exception;
@@ -88,10 +88,23 @@ class FileUploadBehavior extends \yii\base\Behavior
             }
             $this->owner->{$this->attribute} = $this->file->baseName . '.' . $this->file->extension;
         } else { // Fix html forms bug, when we have empty file field
-            if (!$this->owner->isNewRecord && empty($this->owner->{$this->attribute}))
-                $this->owner->{$this->attribute} = ArrayHelper::getValue($this->owner->oldAttributes, $this->attribute, null);
+            if (!$this->owner->isNewRecord && empty($this->owner->{$this->attribute})) {
+				if ($this->owner->{$this->attribute} !== null) {
+					$this->owner->{$this->attribute} = ArrayHelper::getValue($this->owner->oldAttributes, $this->attribute, null);
+				}
+			}
         }
     }
+
+	/**
+	 * Remove file: set attribute to null and delete file
+	 */
+	public function removeFile()
+	{
+		$this->cleanFiles();
+		$this->owner->{$this->attribute} = null;
+		$this->owner->update(false, [$this->attribute]);
+	}
 
     /**
      * Removes files associated with attribute

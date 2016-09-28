@@ -4,7 +4,7 @@
  * @link http://yiidreamteam.com/yii2/upload-behavior
  */
 
-namespace yiidreamteam\upload;
+namespace sashsvamir\upload;
 
 use PHPThumb\GD;
 use yii\helpers\ArrayHelper;
@@ -41,16 +41,26 @@ class ImageUploadBehavior extends FileUploadBehavior
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function cleanFiles()
-    {
-        parent::cleanFiles();
-        foreach (array_keys($this->thumbs) as $profile) {
-            @unlink($this->getThumbFilePath($this->attribute, $profile));
-        }
-    }
+	/**
+	 * Remove image: delete thumbs images, set attribute to null and save model
+	 */
+	public function removeFile()
+	{
+		$this->cleanFiles();
+		$this->owner->{$this->attribute} = null;
+		$this->owner->update(false, [$this->attribute]);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function cleanFiles()
+	{
+		parent::cleanFiles();
+		foreach (array_keys($this->thumbs) as $profile) {
+			@unlink($this->getThumbFilePath($this->attribute, $profile));
+		}
+	}
 
     /**
      * Resolves profile path for thumbnail profile.
