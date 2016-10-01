@@ -18,20 +18,13 @@
       "email": "alexey.samoylov@gmail.com",
       "homepage": "http://yiidreamteam.com/team/alexey",
       "role": "Developer"
-    }
+    },
   ],
-  "minimum-stability": "dev",
   "require": {
     "php": ">=5.4.0",
     "yiisoft/yii2": "*",
-    "masterexploder/phpthumb": "*"
+    "yiisoft/yii2-imagine": "*",
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/yii-dream-team/PHPThumb"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "sashsvamir\\upload\\": "./src"

@@ -6,7 +6,7 @@
 
 namespace sashsvamir\upload;
 
-use PHPThumb\GD;
+use yii\imagine\Image;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
@@ -139,24 +139,20 @@ class ImageUploadBehavior extends FileUploadBehavior
     public function createThumbs()
     {
         $path = $this->getUploadedFilePath($this->attribute);
-        foreach ($this->thumbs as $profile => $config) {
+        foreach ($this->thumbs as $profile => $options) {
             $thumbPath = static::getThumbFilePath($this->attribute, $profile);
             if (is_file($path) && !is_file($thumbPath)) {
 
-                // setup image processor function
-                if (isset($config['processor']) && is_callable($config['processor'])) {
-                    $processor = $config['processor'];
-                    unset($config['processor']);
-                } else {
-                    $processor = function (GD $thumb) use ($config) {
-                        $thumb->adaptiveResize($config['width'], $config['height']);
-                    };
-                }
+				if (!isset($options['mode'])) {
+					$options['mode'] = 'outbound'; // "outbound": обрежет края, "inset": вместит картинку добавив пустые поля
+				}
+				if (!isset($options['jpegQuality'])) {
+					$options['jpegQuality'] = 90;
+				}
 
-                $thumb = new GD($path, $config);
-                call_user_func($processor, $thumb, $this->attribute);
                 FileHelper::createDirectory(pathinfo($thumbPath, PATHINFO_DIRNAME), 0775, true);
-                $thumb->save($thumbPath);
+
+				Image::thumbnail($path, $options['width'], $options['height'], $options['mode'])->save($thumbPath, ['quality' => $options['jpegQuality']]);
             }
         }
     }
