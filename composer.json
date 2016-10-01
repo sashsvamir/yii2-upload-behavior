@@ -18,7 +18,7 @@
       "email": "alexey.samoylov@gmail.com",
       "homepage": "http://yiidreamteam.com/team/alexey",
       "role": "Developer"
-    },
+    }
   ],
   "require": {
     "php": ">=5.4.0",
