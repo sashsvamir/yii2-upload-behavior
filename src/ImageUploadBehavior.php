@@ -17,6 +17,9 @@ class ImageUploadBehavior extends FileUploadBehavior
 {
     public $attribute = 'image';
 
+	/** @var string Placeholder image */
+	public $placeholder = null;
+
     public $createThumbsOnSave = true;
     public $createThumbsOnRequest = false;
 
@@ -101,8 +104,9 @@ class ImageUploadBehavior extends FileUploadBehavior
      */
     public function getImageFileUrl($attribute, $emptyUrl = null)
     {
-        if (!$this->owner->{$attribute})
-            return $emptyUrl;
+        if (!$this->owner->{$attribute}) {
+			return (isset($emptyUrl)) ? $emptyUrl : $this->placeholder;
+		}
 
         return $this->getUploadedFileUrl($attribute);
     }
@@ -115,8 +119,9 @@ class ImageUploadBehavior extends FileUploadBehavior
      */
     public function getThumbFileUrl($attribute, $profile = 'thumb', $emptyUrl = null)
     {
-        if (!$this->owner->{$attribute})
-            return $emptyUrl;
+        if (!$this->owner->{$attribute}) {
+			return (isset($emptyUrl)) ? $emptyUrl : $this->placeholder;
+		}
 
         $behavior = static::getInstance($this->owner, $attribute);
         if ($behavior->createThumbsOnRequest)
