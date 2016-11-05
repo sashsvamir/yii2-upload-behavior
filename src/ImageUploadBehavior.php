@@ -104,9 +104,8 @@ class ImageUploadBehavior extends FileUploadBehavior
      */
     public function getImageFileUrl($attribute, $emptyUrl = null)
     {
-        if (!$this->owner->{$attribute}) {
-			return (isset($emptyUrl)) ? $emptyUrl : $this->placeholder;
-		}
+        if (!$this->owner->{$attribute})
+			return $emptyUrl;
 
         return $this->getUploadedFileUrl($attribute);
     }
@@ -119,15 +118,22 @@ class ImageUploadBehavior extends FileUploadBehavior
      */
     public function getThumbFileUrl($attribute, $profile = 'thumb', $emptyUrl = null)
     {
-        if (!$this->owner->{$attribute}) {
-			return (isset($emptyUrl)) ? $emptyUrl : $this->placeholder;
-		}
+        if (!$this->owner->{$attribute})
+			return $emptyUrl;
 
         $behavior = static::getInstance($this->owner, $attribute);
         if ($behavior->createThumbsOnRequest)
             $behavior->createThumbs();
         return $behavior->resolveProfilePath($behavior->thumbUrl, $profile);
     }
+
+	/**
+	 * @return string|null
+	 */
+	public function getPlaceholderUrl()
+	{
+		return $this->placeholder;
+	}
 
     /**
      * After file save event handler.
